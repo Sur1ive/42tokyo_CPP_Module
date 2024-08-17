@@ -1,5 +1,5 @@
 NAME		= phonebook
-SRCS		= *.cpp
+SRCS		= main.cpp Contact.cpp PhoneBook.cpp
 OBJS		= $(SRCS:.cpp=.o)
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98

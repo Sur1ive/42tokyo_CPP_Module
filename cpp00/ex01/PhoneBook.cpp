@@ -5,25 +5,21 @@
 
 PhoneBook::PhoneBook()
 {
-	_contact_num = 0;
-	for (int i = 0; i < 9; i++)
-		_contacts[i] = NULL;
+	_contact_count = 0;
+	for (int i = 0; i < 8; i++)
+		_contacts[i] = Contact();
 }
 
-void PhoneBook::add_contact(Contact contact)
+void PhoneBook::add_contact(Contact *contact)
 {
-	if (_contact_num >= 8)
+	_contacts[_contact_count++ % 8] = *contact;
+	if (_contact_count >= 8)
 	{
-		_contacts[_contact_num++ % 8] = &contact;
-		std::cout << "Contact has been added successfully\
-			and the oldest one has been deleted."
-				  << std::endl;
+		_contact_count = 8 + _contact_count % 8;
+		std::cout << "Added successfully and the oldest one has been deleted." << std::endl;
 	}
 	else
-	{
-		_contacts[_contact_num++] = &contact;
 		std::cout << "Contact has been added successfully." << std::endl;
-	}
 }
 
 void PhoneBook::add()
@@ -35,14 +31,13 @@ void PhoneBook::add()
 	std::string secret = get_input("Please enter secret: ");
 	Contact contact = Contact(firstname, lastname, nickname, phonenumber, secret);
 	if (contact.is_legal())
-		add_contact(contact);
+		add_contact(&contact);
 	else
 		std::cout << "A contact can't have empty fields" << std::endl;
 }
 
 void PhoneBook::search()
 {
-
 }
 
 std::string PhoneBook::get_input(std::string prompt)

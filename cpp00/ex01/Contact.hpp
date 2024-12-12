@@ -11,13 +11,16 @@ private:
 	std::string _nickname;
 	std::string _phonenumber;
 	std::string _secret;
+	bool _is_empty;
 
 public:
 	Contact(std::string firstname, std::string lastname,
 			std::string nickname, std::string phonenumber,
 			std::string secret);
+	Contact();
 
 	bool is_legal();
+	bool is_empty();
 };
 
 #endif

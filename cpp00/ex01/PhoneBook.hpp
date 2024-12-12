@@ -7,11 +7,11 @@
 class PhoneBook
 {
 private:
-	Contact* _contacts[9];
-	int		_contact_num;
+	Contact _contacts[8];
+	int		_contact_count;
 
 	std::string get_input(std::string prompt);
-	void add_contact(Contact contact);
+	void add_contact(Contact* contact);
 
 public:
 	PhoneBook();

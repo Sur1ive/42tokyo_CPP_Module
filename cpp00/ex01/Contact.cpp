@@ -1,13 +1,16 @@
 #include "Contact.hpp"
 #include <iostream>
+#include <string>
 
-int Contact::set_field(std::string *field)
+Contact::Contact(std::string firstname, std::string lastname,
+			std::string nickname, std::string phonenumber,
+			std::string secret)
+		: _firstname(firstname), _lastname(lastname), _nickname(nickname),
+		  _phonenumber(phonenumber), _secret(secret) {}
+
+bool Contact::is_legal()
 {
-	std::string str;
-	if (!std::getline(std::cin, str))
-		std::cout << std::endl;
-	if (str.empty())
-		return -1;
-	*field = str;
-	return 0;
+	return (_firstname.empty() || _lastname.empty() ||
+		_nickname.empty() || _phonenumber.empty() ||
+		_secret.empty()) ? false : true;
 }

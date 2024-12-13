@@ -24,7 +24,5 @@ int main(void)
 			phonebook.add();
 		else if (cmd == "SEARCH")
 			phonebook.search();
-		else if (!cmd.empty())
-			std::cout << "Command not found" << std::endl;
 	}
 }

@@ -6,18 +6,19 @@
 
 class PhoneBook
 {
-private:
-	Contact _contacts[8];
-	int		_contact_count;
-
-	std::string get_input(std::string prompt);
-	void add_contact(Contact* contact);
-
 public:
 	PhoneBook();
 
 	void search();
 	void add();
+
+private:
+	Contact contacts_[8];
+	int		contact_count_;
+
+	std::string get_input(std::string prompt);
+	void add_contact(Contact* contact);
+	void show_contacts();
 };
 
 #endif

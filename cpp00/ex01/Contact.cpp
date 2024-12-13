@@ -5,19 +5,19 @@
 Contact::Contact(std::string firstname, std::string lastname,
 			std::string nickname, std::string phonenumber,
 			std::string secret)
-		: _firstname(firstname), _lastname(lastname), _nickname(nickname),
-		  _phonenumber(phonenumber), _secret(secret), _is_empty(false) {}
+		: firstname_(firstname), lastname_(lastname), nickname_(nickname),
+		  phonenumber_(phonenumber), secret_(secret), is_empty_(false) {}
 
-Contact::Contact() : _is_empty(true) {}
+Contact::Contact() : is_empty_(true) {}
 
 bool Contact::is_legal()
 {
-	return (_firstname.empty() || _lastname.empty() ||
-		_nickname.empty() || _phonenumber.empty() ||
-		_secret.empty()) ? false : true;
+	return (firstname_.empty() || lastname_.empty() ||
+		nickname_.empty() || phonenumber_.empty() ||
+		secret_.empty()) ? false : true;
 }
 
 bool Contact::is_empty()
 {
-	return (_is_empty);
+	return (is_empty_);
 }

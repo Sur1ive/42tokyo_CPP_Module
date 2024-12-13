@@ -2,20 +2,21 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <iomanip>
 
 PhoneBook::PhoneBook()
 {
-	_contact_count = 0;
+	contact_count_ = 0;
 	for (int i = 0; i < 8; i++)
-		_contacts[i] = Contact();
+		contacts_[i] = Contact();
 }
 
 void PhoneBook::add_contact(Contact *contact)
 {
-	_contacts[_contact_count++ % 8] = *contact;
-	if (_contact_count >= 8)
+	contacts_[contact_count_++ % 8] = *contact;
+	if (contact_count_ >= 8)
 	{
-		_contact_count = 8 + _contact_count % 8;
+		contact_count_ = 8 + contact_count_ % 8;
 		std::cout << "Added successfully and the oldest one has been deleted." << std::endl;
 	}
 	else
@@ -36,8 +37,26 @@ void PhoneBook::add()
 		std::cout << "A contact can't have empty fields" << std::endl;
 }
 
+void PhoneBook::show_contacts()
+{
+	std::cout << std::setw(10) << "index" << " | ";
+	std::cout << std::setw(10) << "first name" << " | ";
+	std::cout << std::setw(10) << "last name" << " | ";
+	std::cout << std::setw(10) << "nickname" << std::endl;
+	int i = 0;
+	while (i < 8 && !contacts_[i].is_empty())
+	{
+		std::cout << std::setw(10) << i + 1 << " | ";
+		std::cout << std::setw(10) << contacts_[i].firstname_ << " | ";
+		std::cout << std::setw(10) << contacts_[i].lastname_ << " | ";
+		std::cout << std::setw(10) << contacts_[i].nickname_ << std::endl;
+		i++;
+	}
+}
+
 void PhoneBook::search()
 {
+	show_contacts();
 }
 
 std::string PhoneBook::get_input(std::string prompt)

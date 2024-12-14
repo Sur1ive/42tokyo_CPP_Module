@@ -16,7 +16,6 @@ private:
 	Contact contacts_[8];
 	int		contact_count_;
 
-	std::string get_input(std::string prompt);
 	void add_contact(Contact* contact);
 	void show_contacts();
 };

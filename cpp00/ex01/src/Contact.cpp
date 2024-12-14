@@ -21,3 +21,12 @@ bool Contact::is_empty()
 {
 	return (is_empty_);
 }
+
+void Contact::show_contact()
+{
+	std::cout << "first name: " << firstname_ << std::endl;
+	std::cout << "last name: " << lastname_ << std::endl;
+	std::cout << "nickname: " << nickname_ << std::endl;
+	std::cout << "phone number: " << phonenumber_ << std::endl;
+	std::cout << "secret: " << secret_ << std::endl;
+}

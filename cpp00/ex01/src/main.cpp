@@ -1,7 +1,6 @@
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 #include <iostream>
-#include <cstdlib>
 #include <string>
 
 int main(void)
@@ -15,14 +14,19 @@ int main(void)
 	while (true)
 	{
 		std::cout << "phonebook> ";
-		if (!std::getline(std::cin, cmd))
-			exit(0);
-
-		if (cmd == "EXIT")
-			exit(0);
-		else if (cmd == "ADD")
-			phonebook.add();
-		else if (cmd == "SEARCH")
-			phonebook.search();
+		std::getline(std::cin, cmd);
+		if (std::cin.eof() || cmd == "EXIT")
+			return (0);
+		try
+		{
+			if (cmd == "ADD")
+				phonebook.add();
+			if (cmd == "SEARCH")
+				phonebook.search();
+		}
+		catch (std::runtime_error& e)
+		{
+			return (0);
+		}
 	}
 }

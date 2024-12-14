@@ -1,8 +1,10 @@
 NAME		= phonebook
-SRCS		= main.cpp Contact.cpp PhoneBook.cpp
+SRC_DIR 	= src/
+SRCS		= main.cpp Contact.cpp PhoneBook.cpp utils.cpp
+SRCS		:= $(addprefix $(SRC_DIR), $(SRCS))
 OBJS		= $(SRCS:.cpp=.o)
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinclude
 
 all: $(NAME)
 

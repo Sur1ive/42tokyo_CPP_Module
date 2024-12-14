@@ -16,6 +16,7 @@ public:
 
 	bool is_legal();
 	bool is_empty();
+	void show_contact();
 
 private:
 	std::string phonenumber_;

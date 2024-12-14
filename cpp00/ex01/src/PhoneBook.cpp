@@ -1,8 +1,10 @@
 #include "PhoneBook.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
 
 PhoneBook::PhoneBook()
 {
@@ -14,9 +16,9 @@ PhoneBook::PhoneBook()
 void PhoneBook::add_contact(Contact *contact)
 {
 	contacts_[contact_count_++ % 8] = *contact;
-	if (contact_count_ >= 8)
+	if (contact_count_ > 8)
 	{
-		contact_count_ = 8 + contact_count_ % 8;
+		contact_count_ = 16 + contact_count_ % 8;
 		std::cout << "Added successfully and the oldest one has been deleted." << std::endl;
 	}
 	else
@@ -39,17 +41,17 @@ void PhoneBook::add()
 
 void PhoneBook::show_contacts()
 {
-	std::cout << std::setw(10) << "index" << " | ";
-	std::cout << std::setw(10) << "first name" << " | ";
-	std::cout << std::setw(10) << "last name" << " | ";
+	std::cout << std::setw(10) << "index" << "|";
+	std::cout << std::setw(10) << "first name" << "|";
+	std::cout << std::setw(10) << "last name" << "|";
 	std::cout << std::setw(10) << "nickname" << std::endl;
 	int i = 0;
 	while (i < 8 && !contacts_[i].is_empty())
 	{
-		std::cout << std::setw(10) << i + 1 << " | ";
-		std::cout << std::setw(10) << contacts_[i].firstname_ << " | ";
-		std::cout << std::setw(10) << contacts_[i].lastname_ << " | ";
-		std::cout << std::setw(10) << contacts_[i].nickname_ << std::endl;
+		std::cout << std::setw(10) << i + 1 << "|";
+		std::cout << std::setw(10) << truncate_str(contacts_[i].firstname_) << "|";
+		std::cout << std::setw(10) << truncate_str(contacts_[i].lastname_) << "|";
+		std::cout << std::setw(10) << truncate_str(contacts_[i].nickname_) << std::endl;
 		i++;
 	}
 }
@@ -57,13 +59,10 @@ void PhoneBook::show_contacts()
 void PhoneBook::search()
 {
 	show_contacts();
-}
-
-std::string PhoneBook::get_input(std::string prompt)
-{
-	std::cout << prompt;
-	std::string str;
-	if (!std::getline(std::cin, str))
-		exit(0);
-	return str;
+	std::string input = get_input("The index you want to search: ");
+	int index = std::atoi(input.c_str());
+	if (index < 1 || index > 8 || contacts_[index - 1].is_empty())
+		std::cout << "No such contact" << std::endl;
+	else
+		contacts_[index - 1].show_contact();
 }

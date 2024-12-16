@@ -1,5 +1,5 @@
-NAME		= zombie
-SRCS		= main.cpp Zombie.cpp zombieHorde.cpp
+NAME		= violence
+SRCS		= main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 OBJS		= $(SRCS:.cpp=.o)
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98

@@ -10,7 +10,6 @@ public:
   Fixed(const int num);
   Fixed(const float num);
   Fixed& operator=(const Fixed& other);
-  std::ostream& operator<<(std::ostream& os, const Fixed& obj);
   ~Fixed();
 
   int getRawBits(void) const;
@@ -22,5 +21,7 @@ private:
   int value_;
   static const int numberOfFractionalBits_ = 8;
 };
+
+std::ostream& operator<<(std::ostream& os, const Fixed& obj);
 
 #endif

@@ -52,19 +52,19 @@ bool Fixed::operator!=(const Fixed& other) const {
   return value_ != other.getRawBits();
 }
 
-Fixed Fixed::operator+(const Fixed& other) {
+Fixed Fixed::operator+(const Fixed& other) const {
   return Fixed(this->toFloat() + other.toFloat());
 }
 
-Fixed Fixed::operator-(const Fixed& other) {
+Fixed Fixed::operator-(const Fixed& other) const {
   return Fixed(this->toFloat() - other.toFloat());
 }
 
-Fixed Fixed::operator*(const Fixed& other) {
+Fixed Fixed::operator*(const Fixed& other) const {
   return Fixed(this->toFloat() * other.toFloat());
 }
 
-Fixed Fixed::operator/(const Fixed& other) {
+Fixed Fixed::operator/(const Fixed& other) const {
   return Fixed(this->toFloat() / other.toFloat());
 }
 
@@ -76,6 +76,17 @@ Fixed& Fixed::operator++() {
 Fixed Fixed::operator++(int) {
   Fixed cp = *this;
   ++(*this);
+  return cp;
+}
+
+Fixed& Fixed::operator--() {
+  --value_;
+  return *this;
+}
+
+Fixed Fixed::operator--(int) {
+  Fixed cp = *this;
+  --(*this);
   return cp;
 }
 

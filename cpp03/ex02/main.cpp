@@ -1,4 +1,4 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main() {
   // ClapTrap a("test");
@@ -17,14 +17,14 @@ int main() {
   // c.attack("222");
 
 
-  ScavTrap aa;
-  ScavTrap bb("test");
-  ScavTrap cc(bb);
+  FragTrap aa;
+  FragTrap bb("test");
+  FragTrap cc(bb);
 
   aa.attack("111");
 
   aa = cc;
-  aa.guardGate();
+  aa.highFivesGuys();
 
   aa.attack("111");
   bb.takeDamage(100);

@@ -7,7 +7,7 @@ class ClapTrap {
 public:
   ClapTrap(const std::string& name = "default");
   ClapTrap(const ClapTrap& other);
-  ~ClapTrap();
+  virtual ~ClapTrap();
   ClapTrap& operator=(const ClapTrap& other);
 
   virtual void attack(const std::string& target);

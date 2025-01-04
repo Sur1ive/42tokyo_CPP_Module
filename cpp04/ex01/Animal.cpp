@@ -3,6 +3,7 @@
 
 Animal::Animal() {
   std::cout << "Animal constructor called" << std::endl;
+  type_ = "None";
 }
 
 Animal& Animal::operator=(const Animal& other) {

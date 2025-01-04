@@ -8,6 +8,8 @@ public:
   WrongCat();
   WrongCat(const WrongCat& other);
   ~WrongCat();
+
+protected:
   WrongCat& operator=(const WrongCat& other);
 };
 

@@ -4,7 +4,8 @@
 #include <iostream>
 
 int main() {
-  std::cout << "---------------test1---------------- " << std::endl;
+  std::cout << "---------------test1: right sound---------------- " << std::endl;
+
   const Animal* meta = new Animal();
   const Animal* j = new Dog();
   const Animal* i = new Cat();
@@ -19,7 +20,8 @@ int main() {
   delete j;
   delete i;
 
-  std::cout << "---------------test2---------------- " << std::endl;
+  std::cout << "---------------test2: wrong sound---------------- " << std::endl;
+
   const WrongAnimal* meta1 = new WrongAnimal();
   const WrongAnimal* i1 = new WrongCat();
 

@@ -3,6 +3,7 @@
 
 WrongAnimal::WrongAnimal() {
   std::cout << "WrongAnimal constructor called" << std::endl;
+  type_ = "None";
 }
 
 WrongAnimal& WrongAnimal::operator=(const WrongAnimal& other) {

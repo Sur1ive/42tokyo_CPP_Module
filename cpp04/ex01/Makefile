@@ -1,5 +1,5 @@
 NAME		= a.out
-SRCS		= main.cpp Cat.cpp Dog.cpp Animal.cpp WrongCat.cpp WrongAnimal.cpp
+SRCS		= main.cpp Cat.cpp Dog.cpp Animal.cpp Brain.cpp
 OBJS		= $(SRCS:.cpp=.o)
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98

@@ -16,8 +16,8 @@ public:
 
 private:
   std::string name_;
-  int hitPoints_;
-  int energyPoints_;
+  unsigned int hitPoints_;
+  unsigned int energyPoints_;
   int attackDamage_;
 };
 

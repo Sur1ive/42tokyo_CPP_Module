@@ -1,4 +1,5 @@
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 Form::Form(std::string name, int gradeToSign, int gradeToExecute)
     : name_(name), isSigned_(false), gradeToSign_(gradeToSign),
@@ -36,22 +37,6 @@ void Form::beSigned(const Bureaucrat &bureaucrat) {
   if (bureaucrat.getGrade() > gradeToSign_)
     throw Form::GradeTooLowException();
   isSigned_ = true;
-}
-
-void Form::signForm(const Bureaucrat &bureaucrat) {
-  if (isSigned_) {
-    std::cout << bureaucrat.getName() << " couldn't sign " << name_
-              << " because it is already signed" << std::endl;
-    return;
-  }
-
-  try {
-    beSigned(bureaucrat);
-    std::cout << bureaucrat.getName() << " signed " << name_ << std::endl;
-  } catch (std::exception &e) {
-    std::cout << bureaucrat.getName() << " couldn't sign " << name_
-              << " because " << e.what() << std::endl;
-  }
 }
 
 const char *Form::GradeTooHighException::what() const throw() {

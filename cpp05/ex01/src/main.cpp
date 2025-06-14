@@ -46,10 +46,10 @@ int main() {
   try {
     std::cout << "Signing " << commonForm << " with " << juniorBureaucrat
               << std::endl;
-    commonForm.signForm(juniorBureaucrat);
+    juniorBureaucrat.signForm(commonForm);
     std::cout << "Signing " << commonForm << " with " << juniorBureaucrat
               << std::endl;
-    commonForm.signForm(juniorBureaucrat);
+    juniorBureaucrat.signForm(commonForm);
 
   } catch (std::exception &e) {
     std::cout << e.what() << std::endl;
@@ -58,7 +58,7 @@ int main() {
   try {
     std::cout << "Signing " << presidentialForm << " with " << juniorBureaucrat
               << std::endl;
-    presidentialForm.signForm(juniorBureaucrat);
+    juniorBureaucrat.signForm(presidentialForm);
   } catch (std::exception &e) {
     std::cout << e.what() << std::endl;
   }

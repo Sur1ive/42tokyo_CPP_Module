@@ -38,3 +38,16 @@ std::string Bureaucrat::getName() const {
 int Bureaucrat::getGrade() const {
 	return grade_;
 }
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& obj) {
+	os << obj.getName() << ", bureaucrat grade " << obj.getGrade();
+	return os;
+}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+	return "Error: Grade too high";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+	return "Error: Grade too low";
+}

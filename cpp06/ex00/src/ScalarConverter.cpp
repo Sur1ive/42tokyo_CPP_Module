@@ -74,64 +74,63 @@ static void convert_char(const char c) {
             << std::endl;
 }
 
-static void convert_float(const float f, const bool int_overflow) {
-  char c = static_cast<char>(f);
-  int i = static_cast<int>(f);
-  double d = static_cast<double>(f);
-
-  if (i < 0 || i > 127 || std::isinf(f) || std::isnan(f)) {
-    std::cout << "char: " << "impossible" << std::endl;
-  } else if (!isprint(i)) {
-    std::cout << "char: " << "Non displayable" << std::endl;
-  } else {
-    std::cout << "char: '" << c << "'" << std::endl;
-  }
-
-  if (int_overflow) {
-    std::cout << "int: " << "impossible" << std::endl;
-  } else {
-    std::cout << "int: " << i << std::endl;
-  }
-  std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f"
-            << std::endl;
-  std::cout << "double: " << std::fixed << std::setprecision(1) << d
-            << std::endl;
-}
-
-static void convert_double(const double d, const bool int_overflow) {
-  char c = static_cast<char>(d);
-  int i = static_cast<int>(d);
-  float f = static_cast<float>(d);
-
-  if (i < 0 || i > 127 || std::isinf(d) || std::isnan(d)) {
-    std::cout << "char: " << "impossible" << std::endl;
-  } else if (!isprint(i)) {
-    std::cout << "char: " << "Non displayable" << std::endl;
-  } else {
-    std::cout << "char: '" << c << "'" << std::endl;
-  }
-  if (int_overflow) {
-    std::cout << "int: " << "impossible" << std::endl;
-  } else {
-    std::cout << "int: " << i << std::endl;
-  }
-  std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f"
-            << std::endl;
-  std::cout << "double: " << std::fixed << std::setprecision(1) << d
-            << std::endl;
-}
-
-static void convert_int(const int i, const bool int_overflow) {
+static void convert_int(const int i) {
   char c = static_cast<char>(i);
   float f = static_cast<float>(i);
   double d = static_cast<double>(i);
 
-  if (i < 0 || i > 127 || std::isinf(d) || std::isnan(d)) {
+  if (i < -128 || i > 127) {
+    std::cout << "char: " << "impossible" << std::endl;
+  } else if (!isprint(i)) {
     std::cout << "char: " << "Non displayable" << std::endl;
   } else {
     std::cout << "char: '" << c << "'" << std::endl;
   }
-  if (int_overflow) {
+  std::cout << "int: " << i << std::endl;
+  std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f"
+            << std::endl;
+  std::cout << "double: " << std::fixed << std::setprecision(1) << d
+            << std::endl;
+}
+
+static void convert_float(const float f) {
+  char c = static_cast<char>(f);
+  int i = static_cast<int>(f);
+  double d = static_cast<double>(f);
+
+  if (f < -128.0f || f > 127.0f || std::isinf(f) || std::isnan(f)) {
+    std::cout << "char: " << "impossible" << std::endl;
+  } else if (!isprint(i)) {
+    std::cout << "char: " << "Non displayable" << std::endl;
+  } else {
+    std::cout << "char: '" << c << "'" << std::endl;
+  }
+
+  if (f < -2147483648.0f || f > 2147483647.0f || std::isinf(f) ||
+      std::isnan(f)) {
+    std::cout << "int: " << "impossible" << std::endl;
+  } else {
+    std::cout << "int: " << i << std::endl;
+  }
+  std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f"
+            << std::endl;
+  std::cout << "double: " << std::fixed << std::setprecision(1) << d
+            << std::endl;
+}
+
+static void convert_double(const double d) {
+  char c = static_cast<char>(d);
+  int i = static_cast<int>(d);
+  float f = static_cast<float>(d);
+
+  if (d < -128.0 || d > 127.0 || std::isinf(d) || std::isnan(d)) {
+    std::cout << "char: " << "impossible" << std::endl;
+  } else if (!isprint(i)) {
+    std::cout << "char: " << "Non displayable" << std::endl;
+  } else {
+    std::cout << "char: '" << c << "'" << std::endl;
+  }
+  if (d < -2147483648.0 || d > 2147483647.0 || std::isinf(d) || std::isnan(d)) {
     std::cout << "int: " << "impossible" << std::endl;
   } else {
     std::cout << "int: " << i << std::endl;
@@ -154,32 +153,29 @@ void ScalarConverter::convert(const std::string &literal) {
   }
 
   if (literal == "nan" || literal == "+inf" || literal == "-inf") {
-    convert_double(std::strtod(literal.c_str(), NULL), true);
+    convert_double(std::strtod(literal.c_str(), NULL));
     return;
   }
 
   if (literal == "nanf" || literal == "+inff" || literal == "-inff") {
-    convert_float(std::atof(literal.c_str()), true);
+    convert_float(std::atof(literal.c_str()));
     return;
   }
 
-  bool int_overflow = false;
-  errno = 0;
-  (void)std::atoi(literal.c_str());
-  if (errno == ERANGE) {
-    int_overflow = true;
-  }
-
   if (literal[literal.length() - 1] == 'f') {
-    convert_float(std::atof(literal.c_str()), int_overflow);
+    convert_float(std::atof(literal.c_str()));
     return;
   }
 
   if (literal.find('.') != std::string::npos) {
-    convert_double(std::strtod(literal.c_str(), NULL), int_overflow);
+    convert_double(std::strtod(literal.c_str(), NULL));
     return;
   }
 
-  convert_int(std::atoi(literal.c_str()), int_overflow);
-  return;
+  if (std::strtod(literal.c_str(), NULL) < -2147483648.0 ||
+      std::strtod(literal.c_str(), NULL) > 2147483647.0) {
+    convert_illegal();
+    return;
+  }
+  convert_int(std::atoi(literal.c_str()));
 }

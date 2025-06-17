@@ -1,6 +1,7 @@
 #include "ScalarConverter.hpp"
 #include <cctype>
 #include <cerrno>
+#include <climits>
 #include <cmath>
 #include <cstdlib>
 #include <iomanip>
@@ -79,9 +80,9 @@ static void convert_int(const int i) {
   float f = static_cast<float>(i);
   double d = static_cast<double>(i);
 
-  if (i < -128 || i > 127) {
+  if (i < CHAR_MIN || i > CHAR_MAX) {
     std::cout << "char: " << "impossible" << std::endl;
-  } else if (!isprint(i)) {
+  } else if (!isprint(c)) {
     std::cout << "char: " << "Non displayable" << std::endl;
   } else {
     std::cout << "char: '" << c << "'" << std::endl;
@@ -98,15 +99,18 @@ static void convert_float(const float f) {
   int i = static_cast<int>(f);
   double d = static_cast<double>(f);
 
-  if (f < -128.0f || f > 127.0f || std::isinf(f) || std::isnan(f)) {
+  if (trunc(d) < static_cast<double>(CHAR_MIN) ||
+      trunc(d) > static_cast<double>(CHAR_MAX) || std::isinf(f) ||
+      std::isnan(f)) {
     std::cout << "char: " << "impossible" << std::endl;
-  } else if (!isprint(i)) {
+  } else if (!isprint(c)) {
     std::cout << "char: " << "Non displayable" << std::endl;
   } else {
     std::cout << "char: '" << c << "'" << std::endl;
   }
 
-  if (f < -2147483648.0f || f > 2147483647.0f || std::isinf(f) ||
+  if (trunc(d) < static_cast<double>(INT_MIN) ||
+      trunc(d) > static_cast<double>(INT_MAX) || std::isinf(f) ||
       std::isnan(f)) {
     std::cout << "int: " << "impossible" << std::endl;
   } else {
@@ -123,14 +127,18 @@ static void convert_double(const double d) {
   int i = static_cast<int>(d);
   float f = static_cast<float>(d);
 
-  if (d < -128.0 || d > 127.0 || std::isinf(d) || std::isnan(d)) {
+  if (trunc(d) < static_cast<double>(CHAR_MIN) ||
+      trunc(d) > static_cast<double>(CHAR_MAX) || std::isinf(d) ||
+      std::isnan(d)) {
     std::cout << "char: " << "impossible" << std::endl;
-  } else if (!isprint(i)) {
+  } else if (!isprint(c)) {
     std::cout << "char: " << "Non displayable" << std::endl;
   } else {
     std::cout << "char: '" << c << "'" << std::endl;
   }
-  if (d < -2147483648.0 || d > 2147483647.0 || std::isinf(d) || std::isnan(d)) {
+  if (trunc(d) < static_cast<double>(INT_MIN) ||
+      trunc(d) > static_cast<double>(INT_MAX) || std::isinf(d) ||
+      std::isnan(d)) {
     std::cout << "int: " << "impossible" << std::endl;
   } else {
     std::cout << "int: " << i << std::endl;
@@ -172,8 +180,8 @@ void ScalarConverter::convert(const std::string &literal) {
     return;
   }
 
-  if (std::strtod(literal.c_str(), NULL) < -2147483648.0 ||
-      std::strtod(literal.c_str(), NULL) > 2147483647.0) {
+  if (std::strtod(literal.c_str(), NULL) < INT_MIN ||
+      std::strtod(literal.c_str(), NULL) > INT_MAX) {
     convert_illegal();
     return;
   }

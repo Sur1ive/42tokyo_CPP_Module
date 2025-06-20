@@ -1,6 +1,9 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
+AForm::AForm(): name_("default"), isSigned_(false), gradeToSign_(150),
+                gradeToExecute_(150) {}
+
 AForm::AForm(std::string name, int gradeToSign, int gradeToExecute)
     : name_(name), isSigned_(false), gradeToSign_(gradeToSign),
       gradeToExecute_(gradeToExecute) {
@@ -18,9 +21,6 @@ AForm::AForm(const AForm &other)
 AForm::~AForm() {}
 
 AForm &AForm::operator=(const AForm &other) {
-  name_ = other.name_;
-  gradeToSign_ = other.gradeToSign_;
-  gradeToExecute_ = other.gradeToExecute_;
   isSigned_ = other.isSigned_;
   return *this;
 }

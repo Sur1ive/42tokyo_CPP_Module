@@ -8,11 +8,10 @@ class AForm;
 
 class Bureaucrat {
 public:
+  Bureaucrat();
   Bureaucrat(std::string name, int grade);
   Bureaucrat(const Bureaucrat &other);
   ~Bureaucrat();
-
-  Bureaucrat &operator=(const Bureaucrat &other);
 
   void incrementGrade();
   void decrementGrade();
@@ -33,7 +32,8 @@ public:
   };
 
 private:
-  std::string name_;
+  Bureaucrat &operator=(const Bureaucrat &other);
+  const std::string name_;
   int grade_;
 };
 

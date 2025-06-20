@@ -8,11 +8,10 @@ class Bureaucrat;
 
 class AForm {
 public:
+  AForm();
   AForm(std::string name, int gradeToSign, int gradeToExecute);
   AForm(const AForm &other);
   virtual ~AForm();
-
-  AForm &operator=(const AForm &other);
 
   std::string getName() const;
   bool getIsSigned() const;
@@ -39,10 +38,12 @@ public:
   };
 
 private:
-  std::string name_;
+  AForm &operator=(const AForm &other);
+
+  const std::string name_;
   bool isSigned_;
-  int gradeToSign_;
-  int gradeToExecute_;
+  const int gradeToSign_;
+  const int gradeToExecute_;
 };
 
 std::ostream &operator<<(std::ostream &os, const AForm &obj);

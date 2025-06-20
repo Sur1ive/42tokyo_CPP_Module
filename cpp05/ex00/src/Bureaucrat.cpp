@@ -1,5 +1,7 @@
 #include "Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat(): name_("default"), grade_(150) {}
+
 Bureaucrat::Bureaucrat(std::string name, int grade)
     : name_(name), grade_(grade) {
   if (grade_ < 1)
@@ -14,7 +16,6 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other)
 Bureaucrat::~Bureaucrat() {}
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
-  name_ = other.name_;
   grade_ = other.grade_;
   return *this;
 }

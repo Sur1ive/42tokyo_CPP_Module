@@ -16,10 +16,15 @@ AForm *Intern::makeForm(std::string formName, std::string target) {
                     new RobotomyRequestForm(target),
                     new PresidentialPardonForm(target)};
 
+  int form_i = -1;
   for (int i = 0; i < 3; i++) {
     if (formName == names[i]) {
-      return forms[i];
+      form_i = i;
+      continue;
     }
+    delete forms[i];
   }
+  if (form_i != -1)
+    return forms[form_i];
   throw std::invalid_argument("Invalid form name");
 }

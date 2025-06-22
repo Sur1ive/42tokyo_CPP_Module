@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
+RobotomyRequestForm::RobotomyRequestForm()
+    : AForm(), target_("default") {}
+
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
     : AForm("RobotomyRequestForm", 72, 45), target_(target) {}
 
@@ -9,15 +12,6 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
     : AForm(other), target_(other.target_) {}
 
 RobotomyRequestForm::~RobotomyRequestForm() {}
-
-RobotomyRequestForm &
-RobotomyRequestForm::operator=(const RobotomyRequestForm &other) {
-  if (this != &other) {
-    AForm::operator=(other);
-    target_ = other.target_;
-  }
-  return *this;
-}
 
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const {
   checkExecuteAuthority(executor);

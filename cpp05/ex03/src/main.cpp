@@ -40,6 +40,14 @@ int main() {
   std::cout << "----------------Test 8------------------" << std::endl;
   seniorBureaucrat.executeForm(*presidentialForm);
 
+  std::cout << "----------------Test 9------------------" << std::endl;
+  try {
+    AForm *noexistForm = intern.makeForm("noexist", "Test");
+    std::cout << noexistForm << std::endl;
+  } catch (std::exception &e) {
+    std::cout << e.what() << std::endl;
+  }
+
   delete shrubberyForm;
   delete robotomyForm;
   delete presidentialForm;

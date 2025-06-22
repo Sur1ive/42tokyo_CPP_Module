@@ -9,11 +9,6 @@ Intern::Intern(const Intern &other) { (void)other; }
 
 Intern::~Intern() {}
 
-Intern &Intern::operator=(const Intern &other) {
-  (void)other;
-  return *this;
-}
-
 AForm *Intern::makeForm(std::string formName, std::string target) {
   const char *names[] = {"shrubbery creation", "robotomy request",
                          "presidential pardon"};

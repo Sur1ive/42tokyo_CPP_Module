@@ -1,6 +1,9 @@
 #include "ShrubberyCreationForm.hpp"
 #include <fstream>
 
+ShrubberyCreationForm::ShrubberyCreationForm()
+    : AForm(), target_("default") {}
+
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
     : AForm("ShrubberyCreationForm", 145, 137), target_(target) {}
 
@@ -8,15 +11,6 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
     : AForm(other), target_(other.target_) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
-
-ShrubberyCreationForm &
-ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other) {
-  if (this != &other) {
-    AForm::operator=(other);
-    target_ = other.target_;
-  }
-  return *this;
-}
 
 void ShrubberyCreationForm::execute(const Bureaucrat &executor) const {
   checkExecuteAuthority(executor);

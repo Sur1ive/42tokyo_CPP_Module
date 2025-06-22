@@ -13,17 +13,17 @@ int main() {
   std::cout << "vector: ";
   for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
     std::cout << *it << " ";
-  std::cout << std::endl;
+  std::cout << "\n\n";
 
-  std::cout << "easyfind(v, 3): ";
+  std::cout << "[test with easyfind(v, 3)]\n";
   std::vector<int>::iterator it = easyfind(v, 3);
-  std::cout << "Found at index: " << std::distance(v.begin(), it) << std::endl;
+  std::cout << "  Found at index: " << std::distance(v.begin(), it) << "\n\n";
 
   try {
-    std::cout << "easyfind(v, 6): ";
+    std::cout << "[test with easyfind(v, 6)]\n";
     easyfind(v, 6);
   } catch (const std::exception &e) {
-    std::cout << e.what() << std::endl;
+    std::cout << "  caught error: " << e.what() << "\n";
   }
 
   return 0;

@@ -27,10 +27,13 @@ public:
     return *this;
   };
 
-  T &operator[](const unsigned int &index) const {
-    if (index >= size_) {
-      throw std::exception();
-    }
+  T &operator[](unsigned int index) {
+    if (index >= size_) throw std::exception();
+    return array_[index];
+  };
+
+  const T &operator[](unsigned int index) const {
+    if (index >= size_) throw std::exception();
     return array_[index];
   };
 

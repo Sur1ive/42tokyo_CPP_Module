@@ -31,7 +31,7 @@ void Span::addNumber(std::vector<int>::iterator begin,
   numbers_.insert(numbers_.end(), begin, end);
 }
 
-unsigned int Span::shortestSpan() {
+unsigned int Span::shortestSpan() const {
   if (numbers_.size() < 2)
     throw std::runtime_error("Not enough numbers to find shortest span");
 
@@ -43,7 +43,7 @@ unsigned int Span::shortestSpan() {
   return shortest;
 }
 
-unsigned int Span::longestSpan() {
+unsigned int Span::longestSpan() const {
   if (numbers_.size() < 2)
     throw std::runtime_error("Not enough numbers to find longest span");
   return *std::max_element(numbers_.begin(), numbers_.end()) -

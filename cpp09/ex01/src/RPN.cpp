@@ -40,19 +40,19 @@ int RPN::evaluate(const std::string &expression) {
     }
 
     long long result = 0;
-    int num1 = stack.top();
+    long long num1 = stack.top();
     stack.pop();
-    int num2 = stack.top();
+    long long num2 = stack.top();
     stack.pop();
     switch (expression[i]) {
     case '+':
-      result = static_cast<long long>(num2) + static_cast<long long>(num1);
+      result = num2 + num1;
       break;
     case '-':
-      result = static_cast<long long>(num2) - static_cast<long long>(num1);
+      result = num2 - num1;
       break;
     case '*':
-      result = static_cast<long long>(num2) * static_cast<long long>(num1);
+      result = num2 * num1;
       break;
     case '/':
       if (num1 == 0) {

@@ -1,7 +1,7 @@
 #include "RPN.hpp"
+#include <climits>
 #include <stack>
 #include <stdexcept>
-#include <climits>
 
 bool RPN::isValidExpression(const std::string &expression) {
   if (expression.empty())
@@ -10,9 +10,9 @@ bool RPN::isValidExpression(const std::string &expression) {
     if (i % 2 == 1 && expression[i] == ' ' && i != expression.length() - 1) {
       continue;
     }
-    if (i % 2 == 0 && (expression[i] == '+' || expression[i] == '-' ||
-                       expression[i] == '*' || expression[i] == '/' ||
-                       isdigit(expression[i]))) {
+    if (i % 2 == 0 &&
+        (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' ||
+         expression[i] == '/' || isdigit(expression[i]))) {
       continue;
     }
     return false;
@@ -39,29 +39,29 @@ int RPN::evaluate(const std::string &expression) {
       throw std::runtime_error("Error: Invalid expression");
     }
 
-    double result = 0;
+    long long result = 0;
     int num1 = stack.top();
     stack.pop();
     int num2 = stack.top();
     stack.pop();
     switch (expression[i]) {
-      case '+':
-        result = num2 + num1;
-        break;
-      case '-':
-        result = num2 - num1;
-        break;
-      case '*':
-        result = num2 * num1;
-        break;
-      case '/':
-        if (num1 == 0) {
-          throw std::runtime_error("Error: Division by zero");
-        }
-        result = num2 / num1;
-        break;
-      default:
-        throw std::runtime_error("Error: Invalid expression");
+    case '+':
+      result = static_cast<long long>(num2) + static_cast<long long>(num1);
+      break;
+    case '-':
+      result = static_cast<long long>(num2) - static_cast<long long>(num1);
+      break;
+    case '*':
+      result = static_cast<long long>(num2) * static_cast<long long>(num1);
+      break;
+    case '/':
+      if (num1 == 0) {
+        throw std::runtime_error("Error: Division by zero");
+      }
+      result = num2 / num1;
+      break;
+    default:
+      throw std::runtime_error("Error: Invalid expression");
     }
     if (result < INT_MIN || result > INT_MAX) {
       throw std::runtime_error("Error: Out of range");

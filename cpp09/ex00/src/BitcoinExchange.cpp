@@ -72,7 +72,7 @@ bool BitcoinExchange::isValueValid(const std::string &value) {
   std::stringstream ss(value);
   std::string integer;
   std::getline(ss, integer, '.');
-  if (integer.length() > 4)
+  if (integer.length() > 4 || (integer.length() > 1 && integer[0] == '0'))
     return false;
 
   int dot_count = 0;

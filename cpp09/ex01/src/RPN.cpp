@@ -39,10 +39,10 @@ int RPN::evaluate(const std::string &expression) {
       throw std::runtime_error("Error: Invalid expression");
     }
 
-    long long result = 0;
-    long long num1 = stack.top();
+    long result = 0;
+    long num1 = stack.top();
     stack.pop();
-    long long num2 = stack.top();
+    long num2 = stack.top();
     stack.pop();
     switch (expression[i]) {
     case '+':

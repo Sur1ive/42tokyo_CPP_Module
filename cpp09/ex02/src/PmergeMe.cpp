@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
-#include <iostream>
 
 bool PmergeMe::isInputValid(const std::string &input) {
   if (input.empty())
@@ -67,11 +66,30 @@ void PmergeMe::mergeSort(std::vector<std::pair<int, int> >::iterator first,
   std::inplace_merge(first, mid, last, compareSecond);
 }
 
+void PmergeMe::mergeSort(std::list<std::pair<int, int> >::iterator first,
+                         std::list<std::pair<int, int> >::iterator last) {
+  size_t n = std::distance(first, last);
+  if (n <= 1)
+    return;
+  std::list<std::pair<int, int> >::iterator mid = first;
+  std::advance(mid, n / 2);
+  mergeSort(first, mid);
+  mergeSort(mid, last);
+  std::inplace_merge(first, mid, last, compareSecond);
+}
+
 void PmergeMe::binaryInsert(std::vector<int> &v,
                             std::vector<int>::iterator first,
                             std::vector<int>::iterator last, int num) {
   std::vector<int>::iterator it = std::lower_bound(first, last, num);
   v.insert(it, num);
+}
+
+void PmergeMe::binaryInsert(std::list<int> &l,
+                            std::list<int>::iterator first,
+                            std::list<int>::iterator last, int num) {
+  std::list<int>::iterator it = std::lower_bound(first, last, num);
+  l.insert(it, num);
 }
 
 std::vector<size_t> PmergeMe::insertOrder(size_t size) {
@@ -90,6 +108,7 @@ std::vector<size_t> PmergeMe::insertOrder(size_t size) {
   return order;
 }
 
+// see merge_insertion.pdf
 void PmergeMe::sort(std::vector<int> &v) {
   std::vector<std::pair<int, int> > pairs;
   int single_num = -1;
@@ -107,7 +126,7 @@ void PmergeMe::sort(std::vector<int> &v) {
   mergeSort(pairs.begin(), pairs.end());
 
   std::vector<int> result;
-  // add node b1 to result(see merge_insertion.pdf)
+  // add node b1 to result
   if (pairs.size() > 0)
     result.push_back(pairs[0].first);
 
@@ -143,4 +162,62 @@ void PmergeMe::sort(std::vector<int> &v) {
   v = result;
 }
 
-void PmergeMe::sort(std::list<int> &l) { (void)l; }
+void PmergeMe::sort(std::list<int> &l) {
+  std::list<std::pair<int, int> > pairs;
+  int single_num = -1;
+  if (l.size() % 2 == 1) {
+    single_num = l.back();
+    l.pop_back();
+  }
+
+  // make pairs
+  for (std::list<int>::iterator it = l.begin(); it != l.end(); ) {
+    int a = *it;
+    ++it;
+    int b = *it;
+    ++it;
+    pairs.push_back(makeSortedPair(a, b));
+  }
+
+  // merge sort pairs by second element(larger one)
+  mergeSort(pairs.begin(), pairs.end());
+
+  std::list<int> result;
+  // add node b1 to result
+  if (pairs.size() > 0)
+    result.push_back(pairs.front().first);
+
+  // if there is only one number, add it to result
+  if (pairs.size() == 0 && single_num != -1)
+    result.push_back(single_num);
+
+  // add node a1~an to result
+  for (std::list<std::pair<int, int> >::iterator it = pairs.begin();
+       it != pairs.end(); ++it) {
+    result.push_back(it->second);
+  }
+
+  // prepare single_num for insert
+  if (single_num != -1)
+    pairs.push_back(std::make_pair(single_num, -1));
+
+  // get insert order(3,2;5,4;11,10,9,8,7,6;...;tk,tk-1,...,tk_1+1)
+  std::vector<size_t> order = insertOrder(pairs.size());
+
+  // binary insert node b2~bn to result
+  size_t insertedCount = 0;
+  for (size_t i = 0; i < order.size(); i++) {
+    if (order[i] - 1 >= pairs.size())
+      continue;
+    // insert node bn among b1~an-1
+    std::list<int>::iterator insertStart = result.begin();
+    std::list<int>::iterator insertEnd = result.begin();
+    size_t offset = order[i] + insertedCount;
+    std::advance(insertEnd, offset);
+    std::list<std::pair<int, int> >::iterator it = pairs.begin();
+    std::advance(it, order[i] - 1);
+    binaryInsert(result, insertStart, insertEnd, it->first);
+    insertedCount++;
+  }
+  l = result;
+}

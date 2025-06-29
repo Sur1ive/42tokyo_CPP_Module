@@ -1,6 +1,7 @@
 #include "PmergeMe.hpp"
 #include <iostream>
 #include <sys/time.h>
+#include <algorithm>
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -8,8 +9,14 @@ int main(int argc, char **argv) {
     return 1;
   }
 
+  if (argc > 10000) {
+    std::cerr << "Error: the number of elements is too large" << std::endl;
+    return 1;
+  }
+
   try {
     std::vector<int> v = PmergeMe::inputToVector(argv);
+    std::vector<int> v_copy = v;
     std::list<int> l = PmergeMe::inputToList(argv);
     std::cout << "Before: ";
     for (int i = 1; i < argc; i++) {
@@ -23,16 +30,26 @@ int main(int argc, char **argv) {
     gettimeofday(&end1, NULL);
     PmergeMe::sort(l);
     gettimeofday(&end2, NULL);
-    std::cout << "After(vector): ";
+
+    // check if the result is correct
+    std::sort(v_copy.begin(), v_copy.end());
+    std::list<int>::iterator it = l.begin();
+    for (size_t i = 0; i < v.size(); i++) {
+      if (v[i] != v_copy[i]) {
+        throw std::runtime_error("Error: sort(vector) is not correct");
+      }
+      if (*it != v_copy[i]) {
+        throw std::runtime_error("Error: sort(list) is not correct");
+      }
+      ++it;
+    }
+
+    std::cout << "After: ";
     for (size_t i = 0; i < v.size(); i++) {
       std::cout << v[i] << " ";
     }
     std::cout << std::endl;
-    std::cout << "After(list): ";
-    for (std::list<int>::iterator it = l.begin(); it != l.end(); it++) {
-      std::cout << *it << " ";
-    }
-    std::cout << std::endl;
+
     double time1 =
         (end1.tv_sec - start.tv_sec) * 1000000 + (end1.tv_usec - start.tv_usec);
     double time2 =

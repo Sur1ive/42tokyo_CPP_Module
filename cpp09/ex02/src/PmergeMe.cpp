@@ -43,15 +43,32 @@ std::list<int> PmergeMe::inputToList(char **argv) {
   return l;
 }
 
+size_t PmergeMe::compareCounter(int add) {
+  static size_t count = 0;
+  count += add;
+  return count;
+}
+
 bool PmergeMe::compareSecond(const std::pair<int, int> &a,
                              const std::pair<int, int> &b) {
   return a.second < b.second;
+}
+
+bool PmergeMe::compareSecondWithCounter(const std::pair<int, int> &a,
+                             const std::pair<int, int> &b) {
+  compareCounter(1);
+  return compareSecond(a, b);
 }
 
 std::pair<int, int> PmergeMe::makeSortedPair(int a, int b) {
   if (a < b)
     return std::make_pair(a, b);
   return std::make_pair(b, a);
+}
+
+std::pair<int, int> PmergeMe::makeSortedPairWithCounter(int a, int b) {
+  compareCounter(1);
+  return makeSortedPair(a, b);
 }
 
 void PmergeMe::mergeSort(std::vector<std::pair<int, int> >::iterator first,
@@ -63,7 +80,7 @@ void PmergeMe::mergeSort(std::vector<std::pair<int, int> >::iterator first,
   std::advance(mid, n / 2);
   mergeSort(first, mid);
   mergeSort(mid, last);
-  std::inplace_merge(first, mid, last, compareSecond);
+  std::inplace_merge(first, mid, last, compareSecondWithCounter);
 }
 
 void PmergeMe::mergeSort(std::list<std::pair<int, int> >::iterator first,
@@ -78,10 +95,15 @@ void PmergeMe::mergeSort(std::list<std::pair<int, int> >::iterator first,
   std::inplace_merge(first, mid, last, compareSecond);
 }
 
+bool PmergeMe::compareWithCounter(int a, int b) {
+  compareCounter(1);
+  return a < b;
+}
+
 void PmergeMe::binaryInsert(std::vector<int> &v,
                             std::vector<int>::iterator first,
                             std::vector<int>::iterator last, int num) {
-  std::vector<int>::iterator it = std::lower_bound(first, last, num);
+  std::vector<int>::iterator it = std::lower_bound(first, last, num, compareWithCounter);
   v.insert(it, num);
 }
 
@@ -119,7 +141,7 @@ void PmergeMe::sort(std::vector<int> &v) {
 
   // make pairs
   for (size_t i = 0; i < v.size(); i += 2) {
-    pairs.push_back(makeSortedPair(v[i], v[i + 1]));
+    pairs.push_back(makeSortedPairWithCounter(v[i], v[i + 1]));
   }
 
   // merge sort pairs by second element(larger one)

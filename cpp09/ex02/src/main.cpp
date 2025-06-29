@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  if (argc > 10000) {
+  if (argc > 20000) {
     std::cerr << "Error: the number of elements is too large" << std::endl;
     return 1;
   }
@@ -58,6 +58,9 @@ int main(int argc, char **argv) {
               << " elements with std::vector : " << time1 << " us" << std::endl;
     std::cout << "Time to process a range of " << argc - 1
               << " elements with std::list : " << time2 << " us" << std::endl;
+
+    std::cout << "Number of comparisons: " << PmergeMe::compareCounter()
+              << std::endl;
 
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;

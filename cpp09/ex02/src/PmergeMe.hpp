@@ -31,6 +31,13 @@ public:
 
   static std::vector<size_t> insertOrder(size_t size);
 
+  // counter for std::vector, not for std::list
+  static size_t compareCounter(int add = 0);
+  static bool compareWithCounter(int a, int b);
+  static bool compareSecondWithCounter(const std::pair<int, int> &a,
+                                       const std::pair<int, int> &b);
+  static std::pair<int, int> makeSortedPairWithCounter(int a, int b);
+
 private:
   static bool isInputValid(const std::string &input);
 

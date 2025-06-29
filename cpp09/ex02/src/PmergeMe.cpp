@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 bool PmergeMe::isInputValid(const std::string &input) {
   if (input.empty())
@@ -119,6 +120,7 @@ void PmergeMe::sort(std::vector<int> &v) {
     result.push_back(pairs[i].second);
   }
 
+  // prepare single_num for insert
   if (single_num != -1)
     pairs.push_back(std::make_pair(single_num, -1));
 
@@ -126,11 +128,17 @@ void PmergeMe::sort(std::vector<int> &v) {
   std::vector<size_t> order = insertOrder(pairs.size());
 
   // binary insert node b2~bn to result
+  size_t insertedCount = 0;
   for (size_t i = 0; i < order.size(); i++) {
     if (order[i] - 1 >= pairs.size())
       continue;
-    // Todo: set correct first and last
-    binaryInsert(result, result.begin(), result.end(), pairs[order[i] - 1].first);
+    // insert node bn among b1~an-1
+    std::vector<int>::iterator insertStart = result.begin();
+    std::vector<int>::iterator insertEnd = result.begin();
+    size_t offset = order[i] + insertedCount;
+    std::advance(insertEnd, offset);
+    binaryInsert(result, insertStart, insertEnd, pairs[order[i] - 1].first);
+    insertedCount++;
   }
   v = result;
 }
